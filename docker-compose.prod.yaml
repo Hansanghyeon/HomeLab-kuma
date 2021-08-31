@@ -1,0 +1,28 @@
+#####################################
+# swarm에서 작동하는 docker-compose
+#####################################
+version: '3.8'
+
+########################### SERVICES
+services:
+  app:
+    image: louislam/uptime-kuma
+    volumes:
+      - ./uptime-kuma:/app/data
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == ${HOSTNAME}
+      labels:
+        - traefik.enable=true
+        ## HTTP Routers
+        - traefik.http.routers.202008__kuma.entrypoints=websecure
+        - traefik.http.routers.202008__kuma.rule=Host(`kuma.${DOMAINNAME}`)
+        - traefik.http.routers.202008__kuma.tls.certresolver=leresolver
+        - traefik.http.services.202008__kuma.loadbalancer.server.port=3001
+
+########################### NETWORKS
+networks:
+  default:
+    external:
+      name: proxy-main
