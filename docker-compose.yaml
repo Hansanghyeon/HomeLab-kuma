@@ -8,7 +8,7 @@ services:
   app:
     image: louislam/uptime-kuma
     volumes:
-      - ./uptime-kuma:/app/data
+      - data:/app/data
     deploy:
       placement:
         constraints:
@@ -16,13 +16,15 @@ services:
       labels:
         - traefik.enable=true
         ## HTTP Routers
-        - traefik.http.routers.202008__kuma.entrypoints=websecure
-        - traefik.http.routers.202008__kuma.rule=Host(`kuma.${DOMAINNAME}`)
-        - traefik.http.routers.202008__kuma.tls.certresolver=leresolver
-        - traefik.http.services.202008__kuma.loadbalancer.server.port=3001
+        - traefik.http.routers.202008__status.entrypoints=websecure
+        - traefik.http.routers.202008__status.rule=Host(`status.hyeon.pro`)
+        - traefik.http.routers.202008__status.tls.certresolver=leresolver
+        - traefik.http.services.202008__status.loadbalancer.server.port=3001
 
 ########################### NETWORKS
 networks:
   default:
     external:
       name: proxy-main
+volumes:
+  data:
