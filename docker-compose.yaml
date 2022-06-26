@@ -12,10 +12,10 @@ services:
     labels:
       - traefik.enable=true
       ## HTTP Routers
-      - traefik.http.routers.202008__status.entrypoints=websecure
-      - traefik.http.routers.202008__status.rule=Host(`status.hyeon.pro`)
-      - traefik.http.routers.202008__status.tls.certresolver=leresolver
-      - traefik.http.services.202008__status.loadbalancer.server.port=3001
+      - traefik.http.routers.202008__status_hyeon.entrypoints=websecure
+      - traefik.http.routers.202008__status_hyeon.rule=Host(`status.hyeon.pro`)
+      - traefik.http.routers.202008__status_hyeon.tls.certresolver=leresolver
+      - traefik.http.services.202008__status_hyeon.loadbalancer.server.port=3001
   beeclover:
     image: louislam/uptime-kuma
     volumes:
@@ -23,10 +23,10 @@ services:
     labels:
       - traefik.enable=true
       ## HTTP Routers
-      - traefik.http.routers.202008__status.entrypoints=websecure
-      - traefik.http.routers.202008__status.rule=Host(`status.beeclover.pro`)
-      - traefik.http.routers.202008__status.tls.certresolver=leresolver
-      - traefik.http.services.202008__status.loadbalancer.server.port=3001
+      - traefik.http.routers.202008__status_beeclover.entrypoints=websecure
+      - traefik.http.routers.202008__status_beeclover.rule=Host(`status.beeclover.pro`)
+      - traefik.http.routers.202008__status_beeclover.tls.certresolver=leresolver
+      - traefik.http.services.202008__status_beeclover.loadbalancer.server.port=3001
 
   traefik:
     image: traefik:v2.4
