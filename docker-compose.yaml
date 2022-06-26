@@ -7,24 +7,42 @@ version: '3.8'
 services:
   app:
     image: louislam/uptime-kuma
+    networks:
+      - traefik_proxy
+      - default
     volumes:
-      - data:/app/data
-    deploy:
-      placement:
-        constraints:
-          - node.hostname == ${HOSTNAME}
-      labels:
-        - traefik.enable=true
-        ## HTTP Routers
-        - traefik.http.routers.202008__status.entrypoints=websecure
-        - traefik.http.routers.202008__status.rule=Host(`status.hyeon.pro`)
-        - traefik.http.routers.202008__status.tls.certresolver=leresolver
-        - traefik.http.services.202008__status.loadbalancer.server.port=3001
+      - ./uptime-kuma:/app/data
+    labels:
+      - traefik.enable=true
+      ## HTTP Routers
+      - traefik.http.routers.202008__status.entrypoints=websecure
+      - traefik.http.routers.202008__status.rule=Host(`status.hyeon.pro`)
+      - traefik.http.routers.202008__status.tls.certresolver=leresolver
+      - traefik.http.services.202008__status.loadbalancer.server.port=3001
+
+  traefik:
+    image: traefik:v2.4
+    container_name: DO__traefik
+    restart: unless-stopped
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
+      - target: 443
+        published: 443
+        protocol: tcp
+        mode: host
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./config/traefik/rules:/rules
+      - ./config/traefik/acme:/acme
+      - ./config/traefik/traefik.yaml:/etc/traefik/traefik.yaml
 
 ########################### NETWORKS
 networks:
-  default:
-    external:
-      name: proxy-main
+  traefik_proxy:
+    external: true
 volumes:
-  data:
+  data: null

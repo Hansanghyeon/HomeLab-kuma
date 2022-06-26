@@ -1,2 +1,6 @@
 .env
 uptime-kuma/
+
+# traefik
+config/traefik/acme/*
+!config/traefik/acme/.gitkeep
