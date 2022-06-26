@@ -7,9 +7,6 @@ version: '3.8'
 services:
   app:
     image: louislam/uptime-kuma
-    networks:
-      - traefik_proxy
-      - default
     volumes:
       - ./uptime-kuma:/app/data
     labels:
@@ -41,8 +38,5 @@ services:
       - ./config/traefik/traefik.yaml:/etc/traefik/traefik.yaml
 
 ########################### NETWORKS
-networks:
-  traefik_proxy:
-    external: true
 volumes:
   data: null
