@@ -5,15 +5,26 @@ version: '3.8'
 
 ########################### SERVICES
 services:
-  app:
+  hyeon:
     image: louislam/uptime-kuma
     volumes:
-      - ./uptime-kuma:/app/data
+      - ./hyeon:/app/data
     labels:
       - traefik.enable=true
       ## HTTP Routers
       - traefik.http.routers.202008__status.entrypoints=websecure
       - traefik.http.routers.202008__status.rule=Host(`status.hyeon.pro`)
+      - traefik.http.routers.202008__status.tls.certresolver=leresolver
+      - traefik.http.services.202008__status.loadbalancer.server.port=3001
+  beeclover:
+    image: louislam/uptime-kuma
+    volumes:
+      - ./beeclover:/app/data
+    labels:
+      - traefik.enable=true
+      ## HTTP Routers
+      - traefik.http.routers.202008__status.entrypoints=websecure
+      - traefik.http.routers.202008__status.rule=Host(`status.beeclover.pro`)
       - traefik.http.routers.202008__status.tls.certresolver=leresolver
       - traefik.http.services.202008__status.loadbalancer.server.port=3001
 
