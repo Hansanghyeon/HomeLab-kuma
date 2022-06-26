@@ -1,5 +1,7 @@
 .env
 uptime-kuma/
+beeclover
+hyeon
 
 # traefik
 config/traefik/acme/*
