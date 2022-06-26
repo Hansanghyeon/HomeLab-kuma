@@ -76,7 +76,7 @@ providers:
 certificatesResolvers:
   leresolver:
     acme:
-      email: certificate@hyeon.pro
+      email: monitoring@hyeon.pro
       storage: /acme/acme.json
       httpChallenge:
         entryPoint: web
